@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="loginViewModel"
+            type="com.example.openweatherapp.ui.auth.fragments.login.LoginViewModel" />
+
+        <import type="com.example.openweatherapp.utils.utility.Response" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        tools:context=".ui.fragments.authentication.SignUpFragment">
+
+        <TextView
+            android:id="@+id/tvEmail"
+            style="@style/authLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimenMed"
+            android:labelFor="@id/etEmail"
+            android:text="@string/email"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/etEmailLayout"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etEmailLayout"
+            style="@style/authEditTextLayoutStyleChip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:hint="@string/email"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:afterTextChanged="@{loginViewModel.setEmail}"
+                android:inputType="textEmailAddress"
+                android:text="@{loginViewModel.email}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvPassword"
+            style="@style/authLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:labelFor="@id/etPassword"
+            android:text="@string/password"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etEmailLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPasswordLayout"
+            style="@style/authEditTextLayoutStyleChip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimenMed"
+            android:hint="@string/password"
+            app:endIconDrawable="@drawable/end_icon_password_visibility_selector"
+            app:endIconMode="password_toggle"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:afterTextChanged="@{loginViewModel.setPassword}"
+                android:inputType="textPassword"
+                android:text="@{loginViewModel.password}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <FrameLayout
+            android:id="@+id/loginActionLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:theme="@style/AuthButtonStyleSmaller"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPasswordLayout">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                android:layout_width="232dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_auth_state"
+                android:enabled="@{loginViewModel.isLoginAllowed}"
+                android:onClick="@{ () -> loginViewModel.loginResponse instanceof Response.Loading ? void :  loginViewModel.login() }"
+                android:paddingVertical="4dp"
+                android:text="@{loginViewModel.loginResponse instanceof Response.Loading ? @string/emptyString : @string/action_login}"
+                tools:text="login" />
+
+            <ProgressBar
+                showIf="@{loginViewModel.loginResponse instanceof Response.Loading}"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:elevation="8dp"
+                android:indeterminateTint="?colorOnPrimary" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/txt_or"
+            style="@style/authTextPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/or"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@id/loginActionLayout"
+            app:layout_constraintStart_toStartOf="@id/loginActionLayout"
+            app:layout_constraintTop_toBottomOf="@id/loginActionLayout" />
+
+        <TextView
+            android:id="@+id/tvSignUpHere"
+            style="@style/linkTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/sign_up"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@id/loginActionLayout"
+            app:layout_constraintStart_toStartOf="@id/loginActionLayout"
+            app:layout_constraintTop_toBottomOf="@id/txt_or" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

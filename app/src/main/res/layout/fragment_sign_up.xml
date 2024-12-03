@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="signUpViewModel"
+            type="com.example.openweatherapp.ui.auth.fragments.signup.SignUpViewModel" />
+
+        <import type="com.example.openweatherapp.utils.utility.Response" />
+
+        <import type="com.example.openweatherapp.utils.databinding.DataBindingHelper" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        tools:context=".ui.fragments.authentication.SignUpFragment">
+
+        <TextView
+            android:id="@+id/tvEmail"
+            style="@style/authLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimenMed"
+            android:labelFor="@id/etEmail"
+            android:text="@string/label_email"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/etEmailLayout"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etEmailLayout"
+            style="@style/authEditTextLayoutStyleChip"
+            errorMsg="@{signUpViewModel.isValidEmail()? @string/emptyString : @string/invalid_email}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:hint="@string/email"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEmail">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimenLow"
+                android:inputType="textEmailAddress"
+                android:onTextChanged="@{( s, st, b, c ) -> signUpViewModel.setEmail(s)}"
+                android:text="@{signUpViewModel.email}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvPassword"
+            style="@style/authLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimenMed"
+            android:labelFor="@id/etPassword"
+            android:text="@string/password"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etEmailLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPasswordLayout"
+            style="@style/authEditTextLayoutStyleChip"
+            errorMsg="@{signUpViewModel.isValidPassword? @string/emptyString : @string/password_hint}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimenMed"
+            android:hint="@string/password"
+            app:endIconDrawable="@drawable/end_icon_password_visibility_selector"
+            app:endIconMode="password_toggle"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimenLow"
+                android:inputType="textPassword"
+                android:onTextChanged="@{ ( s, st, b, c ) -> signUpViewModel.setPassword(s) }"
+                android:text="@{signUpViewModel.password}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/tvConfirmPassword"
+            style="@style/authLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimenLow"
+            android:labelFor="@id/etConfirmPassword"
+            android:text="@string/label_confirm_password"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPasswordLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etConfirmPasswordLayout"
+            style="@style/authEditTextLayoutStyleChip"
+            errorMsg="@{signUpViewModel.isBothPasswordsSame ? @string/emptyString : @string/error_confirm_password }"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimenMed"
+            android:hint="@string/label_confirm_password"
+            app:endIconDrawable="@drawable/end_icon_password_visibility_selector"
+            app:endIconMode="password_toggle"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimenLow"
+                android:inputType="textPassword"
+                android:onTextChanged="@{ ( s, st, b, c ) -> signUpViewModel.setConfirmPassword(s) }"
+                android:text="@{signUpViewModel.confirmPassword}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogin"
+            style="@style/AuthButtonStyleSmaller"
+            android:layout_width="264dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/btn_auth_state"
+            android:enabled="@{DataBindingHelper.all( signUpViewModel.isValidEmail, signUpViewModel.isBothPasswordsSame, signUpViewModel.isValidPassword , DataBindingHelper.notNullOrEmpty(signUpViewModel.password, signUpViewModel.confirmPassword) )}"
+            android:onClick="@{ () -> signUpViewModel.signUpState instanceof Response.Loading ? void :  signUpViewModel.signUp() }"
+            android:paddingVertical="4dp"
+            android:text="@{signUpViewModel.signUpState instanceof Response.Loading? @string/emptyString : @string/sign_up}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etConfirmPasswordLayout"
+            tools:text="@string/sign_up" />
+
+        <ProgressBar
+            showIf="@{signUpViewModel.signUpState instanceof Response.Loading}"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:elevation="8dp"
+            android:indeterminateTint="?colorOnPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/btnLogin"
+            app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/btnLogin"
+            app:layout_constraintTop_toTopOf="@+id/btnLogin" />
+
+        <TextView
+            android:id="@+id/txt_or"
+            style="@style/authTextPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/or"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@id/btnLogin"
+            app:layout_constraintStart_toStartOf="@id/btnLogin"
+            app:layout_constraintTop_toBottomOf="@id/btnLogin" />
+
+        <TextView
+            android:id="@+id/tvLoginHere"
+            style="@style/linkTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/action_login"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@id/txt_or"
+            app:layout_constraintStart_toStartOf="@id/txt_or"
+            app:layout_constraintTop_toBottomOf="@id/txt_or" />
+
+
+        <TextView
+            android:id="@+id/txt_or2"
+            style="@style/authTextPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/or"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/tvLoginHere"
+            app:layout_constraintStart_toStartOf="@id/tvLoginHere"
+            app:layout_constraintTop_toBottomOf="@id/tvLoginHere" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

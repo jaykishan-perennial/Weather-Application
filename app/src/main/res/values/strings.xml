@@ -1,3 +1,53 @@
 <resources>
     <string name="app_name">OpenWeatherApp</string>
+    <string name="email">Email</string>
+    <string name="action_login">Login</string>
+    <string name="password">Password</string>
+    <string name="or">or</string>
+    <string name="label_email">Email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="hey">Hey!</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="join_now">User</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="password_hint">Password must contain at least one digit, one capital latter and one special character and length of 8 to 16</string>
+    <string name="login_signup_tabs">login signup tabs</string>
+    <string name="title_sign_up_failed">Sign Up Failed !</string>
+
+    <string name="action_okay">Okay</string>
+    <string name="title_alert">Alert</string>
+
+    <string name="emptyString"></string>
+    <string name="label_confirm_password">Confirm password</string>
+    <string name="error_confirm_password">New password and confirm password should be same</string>
+
+    <string name="weather_today">Today</string>
+    <string name="weather_feels_like">Feels like</string>
+    <string name="weather_wind">Wind</string>
+    <string name="weather_humidity">Humidity</string>
+    <string name="weather_pressure">Pressure</string>
+    <string name="weather_see_level">Sea level</string>
+    <string name="txt_degrees">o</string>
+    <string name="label_conditions">Conditions</string>
+    <string name="wind_unit">km/h</string>
+    <string name="pressure_unit">hPa</string>
+    <string name="humidity_unit">%</string>
+
+    <string name="msg_oops_no_internet_connection">Oops ! No internet connection</string>
+    <string name="msg_please_check_and_try_again">Please check your internet connection and\n try again</string>
+    <string name="action_retry">Retry</string>
+    <string name="msg_location_disabled">Please enable location to fetch data</string>
+    <string name="msg_permission_required">We need location permission to fetch weather info</string>
+
+    <string name="title_permission_required">Permission Required</string>
+    <string name="action_grant">Grant</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="msg_no_permissions">Location Permissions not granted !</string>
+
+
+    <!--local auth repository-->
+    <string name="txt_user_with_this_email_already_exists">User with this email already exists</string>
+    <string name="txt_unknown_error_occurred">Unknown error occurred</string>
+    <string name="txt_user_with_this_email_does_not_exist">User with this email does not exist</string>
+    <string name="txt_user_password_is_incorrect">User password is incorrect</string>
 </resources>

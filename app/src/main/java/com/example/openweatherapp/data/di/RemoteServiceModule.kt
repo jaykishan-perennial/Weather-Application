@@ -21,7 +21,7 @@ import javax.inject.Singleton
 class RemoteServiceModule {
 
     companion object {
-        private const val BASE_URL = "" //todo please replace your actual base url
+        private const val BASE_URL = "https://api.openweathermap.org/"
     }
 
     @Provides

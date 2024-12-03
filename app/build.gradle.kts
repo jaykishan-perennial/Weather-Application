@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.hilt.android.main)
@@ -17,6 +19,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localFile = project.rootProject.file("local.properties")
+        val properties = Properties()
+        properties.load(localFile.inputStream())
+
+        val apiKey = properties.getProperty("OPEN_WEATHER_API_KEY") ?: ""
+        buildConfigField(
+            type = "String",
+            name = "OPEN_WEATHER_API_KEY",
+            value = apiKey
+        )
     }
 
     buildTypes {
@@ -73,4 +86,14 @@ dependencies {
 
     //joda date-time
     implementation(libs.joda.time)
+
+    //fragment navigation setup
+    implementation(libs.androidx.navigation.fragment.ktx)
+
+    implementation(libs.glide)
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:4.11.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 }

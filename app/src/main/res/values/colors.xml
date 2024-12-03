@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="md_theme_light_primary">#4990b9</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primaryContainer">#C9E6FF</color>
+    <color name="md_theme_light_onPrimaryContainer">#001E2F</color>
+    <color name="md_theme_light_secondary">#4F606E</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_secondaryContainer">#D3E5F5</color>
+    <color name="md_theme_light_onSecondaryContainer">#0C1D29</color>
+    <color name="md_theme_light_tertiary">#64597C</color>
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+    <color name="md_theme_light_tertiaryContainer">#EADDFF</color>
+    <color name="md_theme_light_onTertiaryContainer">#201635</color>
+    <color name="md_theme_light_error">#BA1A1A</color>
+    <color name="md_theme_light_errorContainer">#FFDAD6</color>
+    <color name="md_theme_light_onError">#FFFFFF</color>
+    <color name="md_theme_light_onErrorContainer">#410002</color>
+    <color name="md_theme_light_background">#F7F9FE</color>
+    <color name="md_theme_light_onBackground">#181C20</color>
+    <color name="md_theme_light_surface">#F7F9FE</color>
+    <color name="md_theme_light_onSurface">#181C20</color>
+    <color name="md_theme_light_surfaceVariant">#DDE3EA</color>
+    <color name="md_theme_light_onSurfaceVariant">#41474D</color>
+    <color name="md_theme_light_outline">#71787E</color>
+    <color name="md_theme_light_inverseSurface">#2D3135</color>
+    <color name="md_theme_light_inverseOnSurface">#EEF1F6</color>
+    <color name="md_theme_light_inversePrimary">#94CDF7</color>
+
+    <color name="linkBlue">#004CFF</color>
+    <color name="gray">#6d6d6d</color>
 </resources>

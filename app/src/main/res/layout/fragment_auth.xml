@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="disableTouches"
+            type="Boolean" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?colorPrimary">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dimenMed">
+
+                <TextView
+                    android:id="@+id/tvHeading"
+                    style="@style/authH1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/hey"
+                    app:layout_constraintBottom_toTopOf="@+id/tvSubHeading"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.1"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvSubHeading"
+                    style="@style/authH2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/welcome_back"
+                    app:layout_constraintBottom_toTopOf="@id/tabLayout"
+                    app:layout_constraintStart_toStartOf="@+id/tvHeading"
+                    app:layout_constraintVertical_bias="0" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/upper_corners_56dp_shape"
+                    android:backgroundTint="?colorSurface"
+                    app:tabRippleColor="@null"
+                    app:tabTextAppearance="@style/authTabText"
+                    android:contentDescription="@string/login_signup_tabs"
+                    android:paddingTop="@dimen/dimenLow" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="560dp"
+                    android:paddingHorizontal="@dimen/dimenMed"
+                    android:background="?colorSurface" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <include
+            layout="@layout/partial_disable_click_layout"
+            app:enableIf="@{disableTouches}"/>
+
+    </FrameLayout>
+</layout>

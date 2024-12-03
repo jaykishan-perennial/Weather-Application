@@ -15,7 +15,7 @@ interface AuthDao {
     @Query("SELECT * FROM user_table WHERE email = :email")
     suspend fun getUserByEmail(email: String): UserEntity?
 
-    @Query("SELECT * FROM user_table WHERE email = :email AND password = :password")
-    suspend fun getUserByEmailAndPassword(email: String, password: String): UserEntity?
+    @Query("SELECT EXISTS (SELECT 1 FROM user_table WHERE email = :email)")
+    suspend fun checkUserExist(email: String): Boolean
 
 }

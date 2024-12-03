@@ -1,18 +1,15 @@
 package com.example.openweatherapp.data.source.remote
 
-import com.example.openweatherapp.domain.models.Weather24
 import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
 
-    //todo please replace Weather24 with actual model class
-    //todo change endpoint to actual one
-    @GET("weather")
-    suspend fun get24HourWeatherData(): Weather24
+    @GET("data/2.5/weather")
+    suspend fun getCurrentWeather(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("appid") apiKey: String
+    ): WeatherInfo
 
-    //todo please replace Weather24 with actual model class
-    //todo change endpoint to actual one
-    @POST("weather")
-    suspend fun postWeatherData()
 }

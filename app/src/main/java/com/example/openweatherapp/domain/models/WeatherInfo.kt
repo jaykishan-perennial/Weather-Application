@@ -1,7 +1,7 @@
 package com.example.openweatherapp.domain.models
 
 
-data class Weather24(
+data class WeatherInfo(
     val temp: Double,
     val feels_like: Double,
     val temp_min: Double,

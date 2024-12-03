@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.R" />
+        <import type="com.example.openweatherapp.utils.databinding.DataBindingHelper" />
+
+        <variable
+            name="homeViewModel"
+            type="com.example.openweatherapp.ui.home.HomeViewModel" />
+
+        <variable
+            name="context"
+            type="android.content.Context" />
+
+    </data>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/dashboard_gradient_bg"
+            android:padding="@dimen/dimenMed"
+            android:theme="@style/dashboardStyle">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_location"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="@dimen/dimenLow"
+                android:src="@drawable/ic_location"
+                app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivProfile"
+                app:tint="?colorOnPrimary" />
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{homeViewModel.weatherInfo.name + ',' + ' ' + DataBindingHelper.getCountryName(homeViewModel.weatherInfo.sys.country)}"
+                android:textSize="@dimen/textLarge"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_location"
+                app:layout_constraintEnd_toStartOf="@+id/ivProfile"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@+id/iv_location"
+                app:layout_constraintTop_toTopOf="@+id/iv_location"
+                tools:text="Ahmedabad, Gujarat" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="#77777777"
+                android:padding="@dimen/dimenLow"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Button"
+                app:strokeColor="?colorSecondaryContainer"
+                app:strokeWidth="1dp" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivWeather"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                app:layout_constraintStart_toEndOf="@+id/tvTemperature"
+                app:layout_constraintTop_toTopOf="@+id/tvTemperature"
+                app:weatherIconId="@{homeViewModel.weatherInfo.weather[0].icon}"
+                android:layout_marginTop="-56dp"
+                tools:src="@drawable/weather10n" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvWeatherMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:text="@{homeViewModel.weatherInfo.weather[0].main}"
+                android:textSize="@dimen/textSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTemperature"
+                app:layout_constraintEnd_toEndOf="@+id/ivWeather"
+                app:layout_constraintStart_toStartOf="@+id/ivWeather"
+                tools:text="Rain" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvWeatherDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{homeViewModel.weatherInfo.weather[0].description}"
+                android:textSize="@dimen/textSmall"
+                app:layout_constraintStart_toEndOf="@+id/ivWeather"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/tvWeatherMain"
+                tools:text="Rainy with thunder" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTemperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:text="@{String.valueOf(DataBindingHelper.kelvinToCelsius(homeViewModel.weatherInfo.main.temp))}"
+                android:textSize="64sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivProfile"
+                tools:text="32" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/appCompatTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="-4dp"
+                android:text="@string/txt_degrees"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/tvTemperature"
+                app:layout_constraintTop_toTopOf="@+id/tvTemperature" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="@id/tvTemperature"
+                app:layout_constraintStart_toStartOf="@id/tvTemperature"
+                app:layout_constraintTop_toBottomOf="@+id/tvTemperature" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvFeelsLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-16dp"
+                android:layout_marginTop="@dimen/dimenLow"
+                android:text="Feels like"
+                android:textSize="@dimen/textLarge"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTemperatureFeels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimenLow"
+                android:text="@{String.valueOf(DataBindingHelper.kelvinToCelsius(homeViewModel.weatherInfo.main.feels_like))}"
+                android:textSize="@dimen/textLarge"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/tvFeelsLike"
+                app:layout_constraintTop_toTopOf="@id/tvFeelsLike"
+                tools:text="29" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="-4dp"
+                android:text="@string/txt_degrees"
+                android:textSize="@dimen/textSmall"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/tvTemperatureFeels"
+                app:layout_constraintTop_toTopOf="@+id/tvTemperatureFeels" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSunrise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{DataBindingHelper.timeStringFromLong(homeViewModel.weatherInfo.sys.sunrise)}"
+                android:textSize="@dimen/textSmall"
+                app:layout_constraintStart_toStartOf="@id/pbDayNightProgress"
+                app:layout_constraintTop_toBottomOf="@+id/pbDayNightProgress"
+                tools:text="06:56 AM" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSunset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{DataBindingHelper.timeStringFromLong(homeViewModel.weatherInfo.sys.sunset)}"
+                android:textSize="@dimen/textSmall"
+                app:layout_constraintEnd_toEndOf="@id/pbDayNightProgress"
+                app:layout_constraintTop_toTopOf="@+id/tvSunrise"
+                tools:text="07:30 PM" />
+
+            <ProgressBar
+                android:id="@+id/pbDayNightProgress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginHorizontal="@dimen/dimenLow"
+                android:layout_marginTop="64dp"
+                android:backgroundTint="?colorTertiary"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="@{homeViewModel.sunsetProgress}"
+                android:progressDrawable="@drawable/progress_bar_shape"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFeelsLike"
+                tools:progress="45" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvWeatherConditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/label_conditions"
+                android:textSize="@dimen/textRegular"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tvSunrise"
+                app:layout_constraintTop_toBottomOf="@id/tvSunrise" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSunrise"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="@dimen/dimenLow"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/ic_sunrise"
+                app:layout_constraintBottom_toTopOf="@id/pbDayNightProgress"
+                app:layout_constraintStart_toStartOf="@id/tvSunrise"
+                app:tint="#FFEB3B" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSunset"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="@dimen/dimenLow"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/ic_sunset"
+                app:layout_constraintBottom_toTopOf="@id/pbDayNightProgress"
+                app:layout_constraintEnd_toEndOf="@id/tvSunset"
+                app:tint="#FFC107" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/windCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimenMed"
+                android:layout_marginEnd="@dimen/dimenLow"
+                android:theme="@style/cardStyle"
+                app:cardCornerRadius="@dimen/dimenMed"
+                app:layout_constraintEnd_toStartOf="@+id/humidityCard"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWeatherConditions"
+                app:layout_constraintWidth_percent="0.47">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_wind" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/weather_wind"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="@dimen/textRegular" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(homeViewModel.weatherInfo.wind.speed) + ' ' + @string/wind_unit}"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        tools:text="14 k/h" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/humidityCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:theme="@style/cardStyle"
+                app:cardCornerRadius="@dimen/dimenMed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.98"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/windCard"
+                app:layout_constraintWidth_percent="0.47">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:padding="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_humidity" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/weather_humidity"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="@dimen/textRegular" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(homeViewModel.weatherInfo.main.humidity) + ' ' + @string/humidity_unit}"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        tools:text="62" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimenMed"
+                android:layout_marginBottom="@dimen/dimenLow"
+                android:theme="@style/cardStyle"
+                app:cardCornerRadius="@dimen/dimenMed"
+                app:layout_constraintEnd_toStartOf="@+id/cardView2"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@+id/windCard"
+                app:layout_constraintTop_toBottomOf="@id/windCard"
+                app:layout_constraintWidth_percent="0.47">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_pressure" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/weather_pressure"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="@dimen/textRegular" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(homeViewModel.weatherInfo.main.pressure) + ' ' + @string/pressure_unit}"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        tools:text="1024 mBar" />
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimenLow"
+                android:theme="@style/cardStyle"
+                app:cardCornerRadius="@dimen/dimenMed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.98"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cardView"
+                app:layout_constraintWidth_percent="0.47">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_sea_level" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/weather_see_level"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textSize="@dimen/textRegular" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(homeViewModel.weatherInfo.main.sea_level) + ' ' + @string/pressure_unit}"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        tools:text="1021" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/locationDisabledLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/dashboard_gradient_bg"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_location"
+                    app:tint="?colorOnPrimary"
+                    />
+
+                <TextView
+                    android:id="@+id/textMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msg_location_disabled"
+                    android:textSize="@dimen/textRegular"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="@dimen/dimenMed"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageIllustration"
+                    android:gravity="center"
+                    />
+
+            </LinearLayout>
+
+            <include
+                android:id="@+id/offlineLayout"
+                app:isOffline="@{homeViewModel.isOffline}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                tools:visibility="gone"
+                layout="@layout/partial_no_internet_layout"
+                />
+
+
+            <LinearLayout
+                android:id="@+id/noPermissionsLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone"
+                android:background="@drawable/dashboard_gradient_bg"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_location"
+                    app:tint="?colorOnPrimary"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msg_permission_required"
+                    android:textSize="@dimen/textRegular"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:layout_marginVertical="@dimen/dimenMed"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnGrant"
+                    style="@style/AuthButtonStyleSmaller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="56dp"
+                    android:background="@drawable/btn_auth_state"
+                    android:text="@string/action_grant"
+                    android:layout_marginTop="56dp"
+                    />
+
+            </LinearLayout>
+
+            <FrameLayout
+                showIf="@{homeViewModel.isLoading}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                tools:visibility="gone"
+                android:background="@drawable/dashboard_gradient_bg"
+                >
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="?colorOnPrimary"
+                    />
+
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</layout>

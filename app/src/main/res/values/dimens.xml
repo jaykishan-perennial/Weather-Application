@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimenHigh">24dp</dimen>
+    <dimen name="dimenMed">16dp</dimen>
+    <dimen name="dimenLow">8dp</dimen>
+
+    <dimen name="textExtraSmall">11sp</dimen>
+    <dimen name="textSmaller">13sp</dimen>
+    <dimen name="textSmall">14sp</dimen>
+    <dimen name="textRegular">16sp</dimen>
+    <dimen name="textLarge">18sp</dimen>
+    <dimen name="textLarger">20sp</dimen>
+    <dimen name="textExtraLarge">24sp</dimen>
+
+    <dimen name="authScreenLabelTextSize">16sp</dimen>
+    <dimen name="authScreenButtonTextSizeRegular">24sp</dimen>
+    <dimen name="authScreenButtonTextSizeSmall">18sp</dimen>
+
+
+</resources>
