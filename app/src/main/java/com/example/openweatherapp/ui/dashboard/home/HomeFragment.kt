@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.openweatherapp.R
 import com.example.openweatherapp.databinding.FragmentHomeBinding
+import com.example.openweatherapp.ui.dashboard.DashboardFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -28,6 +29,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
+    private lateinit var dashboardFragment: DashboardFragment
 
     private var locationPermissionRequest : ActivityResultLauncher<String>? = null
 
@@ -38,6 +40,7 @@ class HomeFragment : Fragment() {
         ) { isGranted: Boolean ->
             onPermissionResult(isGranted)
         }
+        dashboardFragment = requireParentFragment() as DashboardFragment
     }
 
     override fun onCreateView(
@@ -50,26 +53,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.homeViewModel = homeViewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.offlineLayout.btnRetry.setOnClickListener {
-            homeViewModel.onRetry()
-        }
-        binding.btnGrant.setOnClickListener { v ->
-            openAppDetailsScreen()
-        }
+        setUpDataBinding()
+        setListeners()
+        setObservers()
         locationPermissionRequest?.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (hasLocationPermission()) {
-            binding.noPermissionsLayout.isVisible = false
-            if (homeViewModel.locationServiceEnabled()) {
-                getWeatherData()
-            } else {
-                binding.locationDisabledLayout.isVisible = true
-                listenForLocationState()
+    private fun setObservers() {
+        homeViewModel.weatherInfo.observe(viewLifecycleOwner) { value ->
+            if (value != null){
+                dashboardFragment.setIsInitialCall(false)
             }
         }
     }
@@ -79,21 +72,44 @@ class HomeFragment : Fragment() {
         locationPermissionRequest = null
     }
 
+    private fun setUpDataBinding() {
+        binding.homeViewModel = homeViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    private fun setListeners() {
+        binding.offlineLayout.btnRetry.setOnClickListener {
+            homeViewModel.onRetry()
+        }
+        binding.btnGrant.setOnClickListener { v ->
+            openAppDetailsScreen()
+        }
+        binding.btnEnableGPS.setOnClickListener { v ->
+            openLocationSettings()
+        }
+    }
+
     private fun getWeatherData() {
-        lifecycleScope.launch {
-            homeViewModel.getWeatherInfo()
+        if (dashboardFragment.isInitialCall) {
+            lifecycleScope.launch {
+                homeViewModel.getWeatherInfo()
+            }
         }
     }
 
     private fun listenForLocationState() {
         lifecycleScope.launch {
-            while (true){
-                val locationServicesEnabled = homeViewModel.locationServiceEnabled().also {
-                    binding.locationDisabledLayout.isVisible = it.not()
-                }
-                if (locationServicesEnabled && homeViewModel.isNetworkAvailable()) {
-                    getWeatherData()
-                    cancel()
+            while (true) {
+                val hasLocationPermissions = hasLocationPermission()
+                binding.noPermissionsLayout.isVisible = hasLocationPermissions.not()
+                if(hasLocationPermissions){
+                    val locationServicesEnabled = homeViewModel.locationServiceEnabled().also {
+                        binding.locationDisabledLayout.isVisible = it.not()
+                    }
+                    if (locationServicesEnabled && homeViewModel.isNetworkAvailable()) {
+                        getWeatherData()
+                        cancel()
+                    }
                 }
                 delay(1000)
             }
@@ -122,15 +138,11 @@ class HomeFragment : Fragment() {
                 binding.apply {
                     noPermissionsLayout.isVisible = true
                 }
+                listenForLocationState()
+                return
             }
-            return
         }
-        if (homeViewModel.locationServiceEnabled()) {
-            getWeatherData()
-        } else {
-            binding.locationDisabledLayout.isVisible = true
-            listenForLocationState()
-        }
+        listenForLocationState()
     }
 
     private fun openAppDetailsScreen() {
@@ -139,6 +151,12 @@ class HomeFragment : Fragment() {
         intent.data = uri
         requireActivity().startActivity(intent)
     }
+
+    private fun openLocationSettings() {
+        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        requireActivity().startActivity(intent)
+    }
+
 
     private fun hasLocationPermission(): Boolean {
         return requireActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED

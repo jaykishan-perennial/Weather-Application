@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.openweatherapp.domain.usecase.LocalAuthUseCase
 import com.example.openweatherapp.ui.auth.utils.userValidation.EmailValidator
 import com.example.openweatherapp.ui.auth.utils.userValidation.PasswordValidator
+import com.example.openweatherapp.utils.enum.ErrorCode
 import com.example.openweatherapp.utils.utility.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -69,11 +70,11 @@ class SignUpViewModel @Inject constructor(
             }
 
             try {
-                delay(1000)
+//                delay(1000)
                 val response = localAuthUseCase.createUser(_email.value!!, _password.value!!)
                 response.collect { setSignUpResponse(it) }
             } catch (e: Exception) {
-                setSignUpResponse(Response.Error(e.message.toString()))
+                setSignUpResponse(Response.Error(ErrorCode.UNKNOWN_ERROR.code))
             }
         }
     }

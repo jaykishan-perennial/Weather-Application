@@ -221,196 +221,6 @@
                 app:layout_constraintEnd_toEndOf="@id/tvSunset"
                 app:tint="#FFC107" />
 
-
-            <!--<androidx.cardview.widget.CardView
-                android:id="@+id/windCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimenMed"
-                android:layout_marginEnd="@dimen/dimenLow"
-                android:theme="@style/cardStyle"
-                app:cardCornerRadius="@dimen/dimenMed"
-                app:layout_constraintEnd_toStartOf="@+id/humidityCard"
-                app:layout_constraintHorizontal_bias="0.2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvWeatherConditions"
-                app:layout_constraintWidth_percent="0.47">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_wind" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/weather_wind"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/textRegular" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{String.valueOf(homeViewModel.weatherInfo.wind.speed) + ' ' + @string/wind_unit}"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        tools:text="14 k/h" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/humidityCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:theme="@style/cardStyle"
-                app:cardCornerRadius="@dimen/dimenMed"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/windCard"
-                app:layout_constraintWidth_percent="0.47">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:padding="4dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_humidity" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/weather_humidity"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/textRegular" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{String.valueOf(homeViewModel.weatherInfo.main.humidity) + ' ' + @string/humidity_unit}"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        tools:text="62" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimenMed"
-                android:layout_marginBottom="@dimen/dimenLow"
-                android:theme="@style/cardStyle"
-                app:cardCornerRadius="@dimen/dimenMed"
-                app:layout_constraintEnd_toStartOf="@+id/cardView2"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@+id/windCard"
-                app:layout_constraintTop_toBottomOf="@id/windCard"
-                app:layout_constraintWidth_percent="0.47">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_pressure" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/weather_pressure"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/textRegular" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{String.valueOf(homeViewModel.weatherInfo.main.pressure) + ' ' + @string/pressure_unit}"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        tools:text="1024 mBar" />
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimenLow"
-                android:theme="@style/cardStyle"
-                app:cardCornerRadius="@dimen/dimenMed"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/cardView"
-                app:layout_constraintWidth_percent="0.47">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_sea_level" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/weather_see_level"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="@dimen/textRegular" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{String.valueOf(homeViewModel.weatherInfo.main.sea_level) + ' ' + @string/pressure_unit}"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        tools:text="1021" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>-->
-
             <LinearLayout
                 android:id="@+id/locationDisabledLayout"
                 android:layout_width="0dp"
@@ -450,17 +260,15 @@
                     />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnRetry"
+                    android:id="@+id/btnEnableGPS"
                     style="@style/AuthButtonStyleSmaller"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="56dp"
                     android:background="@drawable/btn_auth_state"
+                    android:text="@string/action_enable"
                     android:layout_marginTop="56dp"
-                    android:text="@string/action_retry"
-                    android:visibility="gone"
                     />
-
 
             </LinearLayout>
 

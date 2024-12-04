@@ -53,8 +53,9 @@
     <string name="txt_separator">/</string>
     <string name="title_weather_history">Weather history</string>
     <string name="msg_empty_history">History not available</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_user_email_is_incorrect">User email is incorrect</string>
+
     <string name="tab_history">History</string>
     <string name="tab_home">Home</string>
+    <string name="action_enable">Enable</string>
 </resources>

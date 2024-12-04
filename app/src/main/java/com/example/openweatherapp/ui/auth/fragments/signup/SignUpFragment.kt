@@ -14,6 +14,7 @@ import com.example.openweatherapp.databinding.FragmentSignUpBinding
 import com.example.openweatherapp.ui.auth.components.TouchDisabler
 import com.example.openweatherapp.ui.auth.components.ViewPagerFragment
 import com.example.openweatherapp.ui.auth.fragments.AuthFragment
+import com.example.openweatherapp.utils.extension.errorMapper
 import com.example.openweatherapp.utils.extension.hideKeyboard
 import com.example.openweatherapp.utils.extension.showAlertDialog
 import com.example.openweatherapp.utils.utility.Response
@@ -36,6 +37,39 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         viewPagerFragment = authenticationActivity
         touchDisabler = authenticationActivity
 
+        setObservers()
+    }
+
+    private fun navigateToHome() {
+        findNavController().navigate(R.id.action_authFragment_to_homeFragment)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        binding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_sign_up, container, false)
+
+        setUpDataBinding()
+        setListeners()
+
+        return binding.root
+    }
+
+    private fun setUpDataBinding() {
+        binding.signUpViewModel = signUpViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    private fun setListeners() {
+        binding.tvLoginHere.setOnClickListener {
+            viewPagerFragment.changePage(0)
+        }
+
+        binding.root.setOnClickListener(this)
+    }
+
+    private fun setObservers() {
         signUpViewModel.apply {
             signUpState.observe(this@SignUpFragment) {
                 touchDisabler.setTouchesDisabled(it is Response.Loading)
@@ -43,7 +77,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     is Response.Error ->
                         showAlertDialog(
                             mainTitle = getString(R.string.title_sign_up_failed),
-                            subTitle = it.message
+                            subTitle = requireContext().errorMapper(it.errorCode)
                         )
 
                     is Response.Success -> {
@@ -64,28 +98,6 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                 validateBothNewPasswordsSame()
             }
         }
-    }
-
-    private fun navigateToHome() {
-        findNavController().navigate(R.id.action_authFragment_to_homeFragment)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_sign_up, container, false)
-
-        binding.signUpViewModel = signUpViewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        binding.tvLoginHere.setOnClickListener {
-            viewPagerFragment.changePage(0)
-        }
-
-        binding.root.setOnClickListener(this)
-
-        return binding.root
     }
 
     override fun onClick(p0: View?) {

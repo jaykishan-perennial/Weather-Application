@@ -30,6 +30,15 @@ android {
             name = "OPEN_WEATHER_API_KEY",
             value = apiKey
         )
+
+        val aliasKey = properties.getProperty("SHARED_PREF_KEY_ALIAS") ?: ""
+        buildConfigField(
+            type = "String",
+            name = "SHARED_PREF_KEY_ALIAS",
+            value = aliasKey
+        )
+
+
     }
 
     buildTypes {
@@ -95,8 +104,19 @@ dependencies {
     //data Store
     implementation(libs.androidx.datastore.preferences)
 
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:4.11.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.truth)
+    testImplementation(libs.androidx.core.testing)
+
+
+    // Security
+    implementation (libs.security.crypto)
+
+    // Sqlcipher
+    implementation (libs.sqlcipher)
+    implementation (libs.sqlite)
 }

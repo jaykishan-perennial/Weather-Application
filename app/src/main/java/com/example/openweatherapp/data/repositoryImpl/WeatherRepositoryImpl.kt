@@ -1,11 +1,12 @@
 package com.example.openweatherapp.data.repositoryImpl
 
-import android.util.Log
 import com.example.openweatherapp.BuildConfig
 import com.example.openweatherapp.data.source.local.dao.WeatherDao
+import com.example.openweatherapp.data.source.local.entity.WeatherEntity
 import com.example.openweatherapp.data.source.remote.ApiService
 import com.example.openweatherapp.data.source.remote.WeatherInfo
 import com.example.openweatherapp.domain.repository.WeatherRepository
+import com.example.openweatherapp.utils.extension.loge
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -19,7 +20,8 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun getCurrentWeather(
         lat: Double,
-        lon: Double
+        lon: Double,
+        apiKey: String
     ): WeatherInfo? {
         return withContext(Dispatchers.IO){
             val weatherInfo = try {
@@ -27,7 +29,6 @@ class WeatherRepositoryImpl @Inject constructor(
                     lat = lat, lon = lon, apiKey = BuildConfig.OPEN_WEATHER_API_KEY
                 )
             }catch (e: Exception){
-                Log.e(TAG, "getCurrentWeather: $e")
                 null
             }
 
@@ -35,22 +36,20 @@ class WeatherRepositoryImpl @Inject constructor(
                 try {
                     weatherDao.insertWeatherData(it.toWeatherEntity())
                 }catch (e: Exception){
-                    Log.e(TAG, "insertWeatherData $e")
                 }
             }
             weatherInfo
         }
     }
 
-    override suspend fun getWeatherHistory(): List<WeatherInfo> {
+    override suspend fun getWeatherHistory(): List<WeatherEntity> {
         return withContext(Dispatchers.IO){
-            val weatherEntityList = try {
+            try {
                 weatherDao.getWeatherHistory()
             }catch (e: Exception){
-                Log.e(TAG, "getWeatherHistory: $e")
+                "getWeatherHistory: $e".loge(TAG)
                 emptyList()
             }
-            weatherEntityList.map(WeatherInfo::fromWeatherEntity)
         }
     }
 

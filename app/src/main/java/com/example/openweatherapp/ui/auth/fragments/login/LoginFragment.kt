@@ -15,6 +15,7 @@ import com.example.openweatherapp.R
 import com.example.openweatherapp.databinding.FragmentLoginBinding
 import com.example.openweatherapp.ui.auth.components.TouchDisabler
 import com.example.openweatherapp.ui.auth.components.ViewPagerFragment
+import com.example.openweatherapp.utils.extension.errorMapper
 import com.example.openweatherapp.utils.extension.hideKeyboard
 import com.example.openweatherapp.utils.extension.showAlertDialog
 import com.example.openweatherapp.utils.utility.Response
@@ -35,20 +36,6 @@ class LoginFragment : Fragment(), View.OnClickListener {
         viewPagerFragment = authenticationActivity
         touchDisabler = authenticationActivity
 
-        loginViewModel.loginResponse.observe(this) {
-            touchDisabler.setTouchesDisabled(it is Response.Loading)
-            when (it) {
-                is Response.Success -> {
-                    navigateToHome()
-                }
-
-                is Response.Error -> {
-                    showAlertDialog(subTitle = it.message)
-                }
-
-                else -> {}
-            }
-        }
     }
 
     override fun onCreateView(
@@ -57,27 +44,51 @@ class LoginFragment : Fragment(), View.OnClickListener {
 
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_login, container, false)
 
-        binding.loginViewModel = loginViewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        loginViewModel.email.observe(viewLifecycleOwner) {
-            loginViewModel.setLoginAllowed()
-        }
-        loginViewModel.password.observe(viewLifecycleOwner) {
-            loginViewModel.setLoginAllowed()
-        }
-
-        binding.tvSignUpHere.setOnClickListener {
-            viewPagerFragment.changePage(1)
-        }
-
-        binding.root.setOnClickListener(this)
+        setUpDataBinding()
+        setObservers()
+        setListeners()
         return binding.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
         loginViewModel.clearStates()
+    }
+
+    private fun setUpDataBinding() {
+        binding.loginViewModel = loginViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    private fun setObservers() {
+        loginViewModel.loginResponse.observe(viewLifecycleOwner) {
+            touchDisabler.setTouchesDisabled(it is Response.Loading)
+            when (it) {
+                is Response.Success -> {
+                    navigateToHome()
+                }
+
+                is Response.Error -> {
+                    showAlertDialog(subTitle = requireContext().errorMapper(it.errorCode))
+                }
+
+                else -> {}
+            }
+        }
+        loginViewModel.email.observe(viewLifecycleOwner) {
+            loginViewModel.setLoginAllowed()
+        }
+        loginViewModel.password.observe(viewLifecycleOwner) {
+            loginViewModel.setLoginAllowed()
+        }
+    }
+
+    private fun setListeners() {
+        binding.tvSignUpHere.setOnClickListener {
+            viewPagerFragment.changePage(1)
+        }
+
+        binding.root.setOnClickListener(this)
     }
 
     private fun navigateToHome() {

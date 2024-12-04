@@ -39,6 +39,19 @@ datastorePreferences = "1.1.1"
 kotlinxCoroutinesTest = "1.7.3"
 mockitoCore = "4.11.0"
 mockitoKotlin = "4.1.0"
+junitJupiter = "5.8.1"
+mockk = "1.13.5"
+coreTesting = "2.2.0"
+truth = "1.4.4"
+
+
+## security
+securityCrypto = "1.0.0"
+
+## Sqlite
+sqlite = "2.1.0"
+sqlcipher = "4.5.3"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -72,6 +85,10 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+truth = { module = "com.google.truth:truth", version.ref = "truth" }
 
 ## joda date-time
 joda-time = { module = "joda-time:joda-time", version.ref = "jodaTime" }
@@ -84,6 +101,14 @@ androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fr
 
 ## data-store
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+
+
+## security
+security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+
+## sqlite
+sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
+sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "sqlcipher" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -28,7 +28,8 @@ data class WeatherInfo(
     }
 
     companion object {
-        fun fromWeatherEntity(weatherEntity: WeatherEntity): WeatherInfo {
+        fun fromWeatherEntity(weatherEntity: WeatherEntity?): WeatherInfo? {
+            if (weatherEntity == null) return null
             return with(weatherEntity) {
                 WeatherInfo(
                     weather = listOf(Weather(id, main, "", icon)),

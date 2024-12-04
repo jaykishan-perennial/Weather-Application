@@ -13,6 +13,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.example.openweatherapp.data.source.preference.LocalPreferences
+import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +36,12 @@ class DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideDataStorePreference(dataStore: DataStore<Preferences>) = LocalPreferences(dataStore)
+    fun provideGson() = Gson()
+
+    @Provides
+    @Singleton
+    fun provideDataStorePreference(
+        dataStore: DataStore<Preferences>
+    ) = LocalPreferences(dataStore)
 
 }

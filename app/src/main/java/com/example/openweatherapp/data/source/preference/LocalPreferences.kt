@@ -17,9 +17,12 @@ class LocalPreferences @Inject constructor(private val dataStore: DataStore<Pref
         dataStore.edit { preferences -> preferences[key] = value }
     }
 
-    fun <T> getData(key: Preferences.Key<T>, defaultValue: T): Flow<T> {
-        return dataStore.data.catch { emit(emptyPreferences()) }
-            .map { preferences -> preferences[key] ?: defaultValue }
+    fun <T> getData(key: Preferences.Key<T>): Flow<T?> {
+        return dataStore.data.catch {
+            emit(emptyPreferences())
+        }.map {
+                preferences -> preferences[key]
+        }
     }
 }
 

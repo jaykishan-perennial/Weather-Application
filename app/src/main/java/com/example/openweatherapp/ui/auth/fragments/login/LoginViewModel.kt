@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.openweatherapp.domain.usecase.LocalAuthUseCase
 import com.example.openweatherapp.ui.auth.utils.userValidation.EmailValidator
 import com.example.openweatherapp.ui.auth.utils.userValidation.PasswordValidator
+import com.example.openweatherapp.utils.enum.ErrorCode
 import com.example.openweatherapp.utils.utility.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -48,19 +49,11 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             setLoginState(Response.Loading)
 
-            if (!emailValidator.validate(_email.value)) {
-                return@launch
-            }
-            if (!passwordValidator.validate(_password.value)) {
-                return@launch
-            }
-
             try {
-                delay(1000)
                 val response = localAuthUseCase.login(_email.value!!, _password.value!!)
                 response.collect { setLoginState(it) }
             } catch (e: Exception) {
-                setLoginState(Response.Error(e.message.toString()))
+                setLoginState(Response.Error(ErrorCode.UNKNOWN_ERROR.code))
             }
         }
     }

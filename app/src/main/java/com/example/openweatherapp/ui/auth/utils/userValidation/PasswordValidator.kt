@@ -14,6 +14,7 @@ class PasswordValidator @Inject constructor() {
 
         var hasDigit = false
         var hasUppercaseChar = false
+        var hasLowercaseChar = false
         var hasSpecialSymbol = false
         var hasWhiteSpace = false
 
@@ -24,11 +25,13 @@ class PasswordValidator @Inject constructor() {
                 hasUppercaseChar = true
             } else if (it.isWhitespace()) {
                 hasWhiteSpace = true
+            } else if (it.isLowerCase()) {
+                hasLowercaseChar = true
             } else {
                 hasSpecialSymbol = true
             }
         }
 
-        return hasDigit && hasSpecialSymbol && hasUppercaseChar && hasWhiteSpace.not()
+        return hasDigit && hasSpecialSymbol && hasUppercaseChar && hasWhiteSpace.not() && hasLowercaseChar
     }
 }

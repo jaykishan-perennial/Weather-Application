@@ -10,9 +10,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.openweatherapp.R
-import com.example.openweatherapp.data.source.preference.LocalPreferences
 import com.example.openweatherapp.data.source.preference.PrefsKeys
 import com.example.openweatherapp.databinding.FragmentAuthBinding
+import com.example.openweatherapp.domain.security.SecurePreferences
 import com.example.openweatherapp.ui.auth.components.AuthViewPagerAdapter
 import com.example.openweatherapp.ui.auth.components.TouchDisabler
 import com.example.openweatherapp.ui.auth.components.ViewPagerFragment
@@ -40,9 +40,8 @@ class AuthFragment : Fragment(), ViewPagerFragment, TouchDisabler {
         R.string.welcome_back, R.string.join_now,
     )
 
-
     @Inject
-    lateinit var localPreferences: LocalPreferences
+    lateinit var securePreferences: SecurePreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,13 +81,12 @@ class AuthFragment : Fragment(), ViewPagerFragment, TouchDisabler {
 
     private fun gotoHomeScreenIfLoggedIn() {
         runBlocking {
-            val isLoggedIn = localPreferences.getData(PrefsKeys.isLoggedIn, false).firstOrNull() ?: return@runBlocking
+            val isLoggedIn = securePreferences.getData(PrefsKeys.isLoggedIn, false).firstOrNull() ?: return@runBlocking
             if (isLoggedIn) {
                 findNavController().navigate(R.id.action_authFragment_to_homeFragment)
             }
         }
     }
-
 
     override fun changePage(index: Int) {
         binding.viewpager.currentItem = index

@@ -4,14 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.openweatherapp.data.source.remote.WeatherInfo
-import com.example.openweatherapp.domain.repository.WeatherRepository
+import com.example.openweatherapp.domain.usecase.WeatherHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WeatherHistoryViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository
+    private val weatherHistoryUseCase: WeatherHistoryUseCase
 ) : ViewModel() {
 
     private val _weatherHistory = MutableLiveData<List<WeatherInfo>>()
@@ -23,7 +23,7 @@ class WeatherHistoryViewModel @Inject constructor(
 
     fun getWeatherHistory() {
         viewModelScope.launch {
-            val weatherHistory = weatherRepository.getWeatherHistory()
+            val weatherHistory = weatherHistoryUseCase.invoke()
             setWeatherHistory(weatherHistory)
         }
     }

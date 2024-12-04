@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.openweatherapp.data.source.remote.WeatherInfo
 import com.example.openweatherapp.domain.repository.WeatherRepository
+import com.example.openweatherapp.domain.usecase.CurrentWeatherUseCase
 import com.example.openweatherapp.utils.utility.LocationHelper
 import com.example.openweatherapp.utils.utility.NetworkConnectionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository,
+    private val currentWeatherUseCase: CurrentWeatherUseCase,
     private val networkConnectionManager: NetworkConnectionManager,
     private val locationHelper: LocationHelper
 ) : ViewModel() {
@@ -68,9 +69,9 @@ class HomeViewModel @Inject constructor(
             return
         }
 
-        val response = weatherRepository.getCurrentWeather(
-            location.latitude,
-            location.longitude
+        val response = currentWeatherUseCase.invoke(
+            lat = location.latitude,
+            lon = location.longitude
         )
 
         response?.let {

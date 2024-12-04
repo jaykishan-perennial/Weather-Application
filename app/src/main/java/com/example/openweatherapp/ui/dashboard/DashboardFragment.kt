@@ -16,6 +16,13 @@ class DashboardFragment : Fragment() {
 
     private lateinit var binding: FragmentDashboardBinding
 
+    private var _isInitialCall = true
+    val isInitialCall get() = _isInitialCall
+
+    val homeFragment by lazy {
+        HomeFragment()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,7 +36,7 @@ class DashboardFragment : Fragment() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.item_home -> {
-                    changeFragment(HomeFragment())
+                    changeFragment(homeFragment)
                 }
                 R.id.item_history -> {
                     changeFragment(WeatherHistoryFragment())
@@ -48,6 +55,10 @@ class DashboardFragment : Fragment() {
             .beginTransaction()
             .replace(binding.flDashboard.id, fragment)
             .commit()
+    }
+
+    fun setIsInitialCall(value : Boolean){
+        _isInitialCall = value
     }
 
 }

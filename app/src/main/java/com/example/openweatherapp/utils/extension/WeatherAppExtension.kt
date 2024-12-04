@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.openweatherapp.R
+import com.example.openweatherapp.utils.enum.ErrorCode
 
 fun Context.showToast(toastMessage: String) {
     Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
@@ -53,4 +54,29 @@ fun Context.showAlertDialog(
         }
         show()
     }
+}
+
+fun Context.errorMapper(errorCode: Int): String {
+    val errorsMap: Map<Int, String> = mapOf(
+        Pair(
+            ErrorCode.INVALID_EMAIL.code,
+            getString(R.string.txt_user_email_is_incorrect)
+        ),
+        Pair(
+            ErrorCode.INVALID_PASSWORD.code,
+            getString(R.string.txt_user_password_is_incorrect)
+        ),
+        Pair(
+            ErrorCode.USER_ALREADY_EXISTS.code,
+            getString(R.string.txt_user_with_this_email_already_exists)
+        ),
+        Pair(
+            ErrorCode.USER_NOT_EXISTS.code,
+            getString(R.string.txt_user_with_this_email_does_not_exist)
+        ),
+    ).withDefault {
+        getString(R.string.txt_unknown_error_occurred)
+    }
+
+    return errorsMap.getValue(errorCode)
 }
