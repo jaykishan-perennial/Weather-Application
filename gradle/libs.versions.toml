@@ -32,6 +32,9 @@ jodaTime = "2.13.0"
 # Glide
 glide = "4.16.0"
 
+## data store version
+datastorePreferences = "1.1.1"
+
 ## testing library version
 kotlinxCoroutinesTest = "1.7.3"
 mockitoCore = "4.11.0"
@@ -78,6 +81,9 @@ glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 
 ## fragment navigation setup
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+
+## data-store
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

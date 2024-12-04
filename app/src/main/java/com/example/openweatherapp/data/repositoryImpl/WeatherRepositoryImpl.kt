@@ -2,6 +2,7 @@ package com.example.openweatherapp.data.repositoryImpl
 
 import android.util.Log
 import com.example.openweatherapp.BuildConfig
+import com.example.openweatherapp.data.source.local.dao.WeatherDao
 import com.example.openweatherapp.data.source.remote.ApiService
 import com.example.openweatherapp.data.source.remote.WeatherInfo
 import com.example.openweatherapp.domain.repository.WeatherRepository
@@ -12,7 +13,8 @@ import javax.inject.Inject
 private const val TAG = "WeatherRepositoryImpl"
 
 class WeatherRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val weatherDao: WeatherDao
 ) : WeatherRepository {
 
     override suspend fun getCurrentWeather(
@@ -20,7 +22,7 @@ class WeatherRepositoryImpl @Inject constructor(
         lon: Double
     ): WeatherInfo? {
         return withContext(Dispatchers.IO){
-            try {
+            val weatherInfo = try {
                 apiService.getCurrentWeather(
                     lat = lat, lon = lon, apiKey = BuildConfig.OPEN_WEATHER_API_KEY
                 )
@@ -28,6 +30,28 @@ class WeatherRepositoryImpl @Inject constructor(
                 Log.e(TAG, "getCurrentWeather: $e")
                 null
             }
+
+            weatherInfo?.let {
+                try {
+                    weatherDao.insertWeatherData(it.toWeatherEntity())
+                }catch (e: Exception){
+                    Log.e(TAG, "insertWeatherData $e")
+                }
+            }
+            weatherInfo
         }
     }
+
+    override suspend fun getWeatherHistory(): List<WeatherInfo> {
+        return withContext(Dispatchers.IO){
+            val weatherEntityList = try {
+                weatherDao.getWeatherHistory()
+            }catch (e: Exception){
+                Log.e(TAG, "getWeatherHistory: $e")
+                emptyList()
+            }
+            weatherEntityList.map(WeatherInfo::fromWeatherEntity)
+        }
+    }
+
 }

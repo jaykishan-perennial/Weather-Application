@@ -27,6 +27,12 @@ object DataBindingHelper {
     }
 
     @JvmStatic
+    fun dateTimeStringFromLong(millis : Long) : String {
+        val formatter = SimpleDateFormat("MMM dd yyyy 'at' hh:mm a", Locale.getDefault())
+        return formatter.format(Date(millis * 1000))
+    }
+
+    @JvmStatic
     fun kelvinToCelsius(kelvin : Double) : String {
         return (kelvin - 273.15).toInt().toString()
     }

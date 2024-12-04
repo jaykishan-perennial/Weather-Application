@@ -5,16 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.openweatherapp.R
+import com.example.openweatherapp.data.source.preference.LocalPreferences
+import com.example.openweatherapp.data.source.preference.PrefsKeys
 import com.example.openweatherapp.databinding.FragmentAuthBinding
 import com.example.openweatherapp.ui.auth.components.AuthViewPagerAdapter
 import com.example.openweatherapp.ui.auth.components.TouchDisabler
 import com.example.openweatherapp.ui.auth.components.ViewPagerFragment
 import com.example.openweatherapp.ui.auth.fragments.login.LoginFragment
 import com.example.openweatherapp.ui.auth.fragments.signup.SignUpFragment
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AuthFragment : Fragment(), ViewPagerFragment, TouchDisabler {
@@ -33,6 +39,15 @@ class AuthFragment : Fragment(), ViewPagerFragment, TouchDisabler {
     private val tabMsg = listOf(
         R.string.welcome_back, R.string.join_now,
     )
+
+
+    @Inject
+    lateinit var localPreferences: LocalPreferences
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        gotoHomeScreenIfLoggedIn()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -64,6 +79,16 @@ class AuthFragment : Fragment(), ViewPagerFragment, TouchDisabler {
 
         return binding.root
     }
+
+    private fun gotoHomeScreenIfLoggedIn() {
+        runBlocking {
+            val isLoggedIn = localPreferences.getData(PrefsKeys.isLoggedIn, false).firstOrNull() ?: return@runBlocking
+            if (isLoggedIn) {
+                findNavController().navigate(R.id.action_authFragment_to_homeFragment)
+            }
+        }
+    }
+
 
     override fun changePage(index: Int) {
         binding.viewpager.currentItem = index

@@ -1,14 +1,15 @@
-package com.example.openweatherapp.ui.home
+package com.example.openweatherapp.ui.dashboard.home
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -18,6 +19,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.openweatherapp.R
 import com.example.openweatherapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -26,10 +29,15 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private val locationPermissionRequest = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        onPermissionResult(isGranted)
+    private var locationPermissionRequest : ActivityResultLauncher<String>? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            onPermissionResult(isGranted)
+        }
     }
 
     override fun onCreateView(
@@ -50,7 +58,7 @@ class HomeFragment : Fragment() {
         binding.btnGrant.setOnClickListener { v ->
             openAppDetailsScreen()
         }
-        locationPermissionRequest.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        locationPermissionRequest?.launch(Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
     override fun onResume() {
@@ -66,6 +74,11 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        locationPermissionRequest = null
+    }
+
     private fun getWeatherData() {
         lifecycleScope.launch {
             homeViewModel.getWeatherInfo()
@@ -73,16 +86,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun listenForLocationState() {
-        Handler(requireActivity().mainLooper).postDelayed({
-            val locationServicesEnabled = homeViewModel.locationServiceEnabled().also {
-                binding.locationDisabledLayout.isVisible = it.not()
+        lifecycleScope.launch {
+            while (true){
+                val locationServicesEnabled = homeViewModel.locationServiceEnabled().also {
+                    binding.locationDisabledLayout.isVisible = it.not()
+                }
+                if (locationServicesEnabled && homeViewModel.isNetworkAvailable()) {
+                    getWeatherData()
+                    cancel()
+                }
+                delay(1000)
             }
-            if (locationServicesEnabled && homeViewModel.isNetworkAvailable()) {
-                getWeatherData()
-            } else {
-                listenForLocationState()
-            }
-        }, 1000)
+        }
     }
 
     private fun onPermissionResult(isGranted: Boolean) {
@@ -126,8 +141,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun hasLocationPermission(): Boolean {
-        return requireActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED
-                || requireActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        return requireActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || requireActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
 }

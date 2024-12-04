@@ -10,7 +10,7 @@
 
         <variable
             name="homeViewModel"
-            type="com.example.openweatherapp.ui.home.HomeViewModel" />
+            type="com.example.openweatherapp.ui.dashboard.home.HomeViewModel" />
 
         <variable
             name="context"
@@ -21,14 +21,16 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@drawable/dashboard_gradient_bg">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/dashboard_gradient_bg"
             android:padding="@dimen/dimenMed"
-            android:theme="@style/dashboardStyle">
+            android:theme="@style/dashboardStyle"
+            >
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_location"
@@ -36,9 +38,8 @@
                 android:layout_height="48dp"
                 android:padding="@dimen/dimenLow"
                 android:src="@drawable/ic_location"
-                app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/ivProfile"
+                app:layout_constraintTop_toTopOf="parent"
                 app:tint="?colorOnPrimary" />
 
             <TextView
@@ -49,25 +50,10 @@
                 android:textSize="@dimen/textLarge"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_location"
-                app:layout_constraintEnd_toStartOf="@+id/ivProfile"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@+id/iv_location"
                 app:layout_constraintTop_toTopOf="@+id/iv_location"
                 tools:text="Ahmedabad, Gujarat" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivProfile"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="#77777777"
-                android:padding="@dimen/dimenLow"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_avatar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Button"
-                app:strokeColor="?colorSecondaryContainer"
-                app:strokeWidth="1dp" />
 
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -109,13 +95,13 @@
                 android:id="@+id/tvTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="156dp"
                 android:text="@{String.valueOf(DataBindingHelper.kelvinToCelsius(homeViewModel.weatherInfo.main.temp))}"
                 android:textSize="64sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivProfile"
+                app:layout_constraintTop_toBottomOf="@+id/iv_location"
                 tools:text="32" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -213,18 +199,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvFeelsLike"
                 tools:progress="45" />
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWeatherConditions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/label_conditions"
-                android:textSize="@dimen/textRegular"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tvSunrise"
-                app:layout_constraintTop_toBottomOf="@id/tvSunrise" />
-
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivSunrise"
                 android:layout_width="24dp"
@@ -248,7 +222,7 @@
                 app:tint="#FFC107" />
 
 
-            <androidx.cardview.widget.CardView
+            <!--<androidx.cardview.widget.CardView
                 android:id="@+id/windCard"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -435,7 +409,7 @@
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>-->
 
             <LinearLayout
                 android:id="@+id/locationDisabledLayout"
@@ -474,6 +448,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageIllustration"
                     android:gravity="center"
                     />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnRetry"
+                    style="@style/AuthButtonStyleSmaller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="56dp"
+                    android:background="@drawable/btn_auth_state"
+                    android:layout_marginTop="56dp"
+                    android:text="@string/action_retry"
+                    android:visibility="gone"
+                    />
+
 
             </LinearLayout>
 

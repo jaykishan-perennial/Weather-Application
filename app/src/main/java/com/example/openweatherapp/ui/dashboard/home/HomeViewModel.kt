@@ -1,4 +1,4 @@
-package com.example.openweatherapp.ui.home
+package com.example.openweatherapp.ui.dashboard.home
 
 import android.animation.ValueAnimator
 import androidx.lifecycle.LiveData

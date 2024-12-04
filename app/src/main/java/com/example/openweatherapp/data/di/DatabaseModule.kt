@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.openweatherapp.data.source.local.AppDatabase
 import com.example.openweatherapp.data.source.local.dao.AuthDao
+import com.example.openweatherapp.data.source.local.dao.WeatherDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +27,10 @@ class DatabaseModule {
     @Provides
     internal fun provideAuthDao(appDatabase: AppDatabase): AuthDao {
         return appDatabase.authDao()
+    }
+
+    @Provides
+    internal fun provideWeatherDao(appDatabase: AppDatabase): WeatherDao {
+        return appDatabase.weatherDao()
     }
 }

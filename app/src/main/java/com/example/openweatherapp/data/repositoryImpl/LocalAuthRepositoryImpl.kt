@@ -9,11 +9,14 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 import com.example.openweatherapp.R
+import com.example.openweatherapp.data.source.preference.LocalPreferences
+import com.example.openweatherapp.data.source.preference.PrefsKeys
 import com.example.openweatherapp.domain.repository.ResourceProviderRepository
 
 @Singleton
 class LocalAuthRepositoryImpl @Inject constructor(
-    private val authDao: AuthDao, private val resource: ResourceProviderRepository
+    private val authDao: AuthDao, private val resource: ResourceProviderRepository,
+    private val localPreferences: LocalPreferences
 ) : LocalAuthRepository {
     override suspend fun createUser(userEntity: UserEntity): Flow<Response<Unit>> {
         return flow {
@@ -29,6 +32,7 @@ class LocalAuthRepositoryImpl @Inject constructor(
                 Response.Error(resource.getString(R.string.txt_user_with_this_email_already_exists))
             } else {
                 authDao.createUser(userEntity)
+                localPreferences.setData(PrefsKeys.isLoggedIn, true)
                 Response.Success(Unit)
             }
         } catch (exception: Exception) {
@@ -53,6 +57,7 @@ class LocalAuthRepositoryImpl @Inject constructor(
             } else if (user.password != password) {
                 Response.Error(resource.getString(R.string.txt_user_password_is_incorrect))
             } else {
+                localPreferences.setData(PrefsKeys.isLoggedIn, true)
                 Response.Success(Unit)
             }
         } catch (exception: Exception) {

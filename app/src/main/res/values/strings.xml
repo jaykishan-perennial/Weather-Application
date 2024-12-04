@@ -36,7 +36,7 @@
     <string name="msg_oops_no_internet_connection">Oops ! No internet connection</string>
     <string name="msg_please_check_and_try_again">Please check your internet connection and\n try again</string>
     <string name="action_retry">Retry</string>
-    <string name="msg_location_disabled">Please enable location to fetch data</string>
+    <string name="msg_location_disabled">Please enable GPS location to fetch data</string>
     <string name="msg_permission_required">We need location permission to fetch weather info</string>
 
     <string name="title_permission_required">Permission Required</string>
@@ -50,4 +50,11 @@
     <string name="txt_unknown_error_occurred">Unknown error occurred</string>
     <string name="txt_user_with_this_email_does_not_exist">User with this email does not exist</string>
     <string name="txt_user_password_is_incorrect">User password is incorrect</string>
+    <string name="txt_separator">/</string>
+    <string name="title_weather_history">Weather history</string>
+    <string name="msg_empty_history">History not available</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_history">History</string>
+    <string name="tab_home">Home</string>
 </resources>

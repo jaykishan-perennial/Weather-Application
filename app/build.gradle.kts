@@ -92,6 +92,9 @@ dependencies {
 
     implementation(libs.glide)
 
+    //data Store
+    implementation(libs.androidx.datastore.preferences)
+
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:4.11.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
