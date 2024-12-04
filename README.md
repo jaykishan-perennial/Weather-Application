@@ -111,6 +111,10 @@ WeatherApp/
   <img src="https://github.com/user-attachments/assets/633adf35-1da0-4d36-81e5-0a69a255e815">
 </p>
 
+## Security tools used in app 🚀
+**RoomDB:** Used 'sqlcipher'
+**DataStore:** Used 'security.crypto'
+
 ## Installation 🚀
 
 1. Clone this repository:
@@ -121,10 +125,17 @@ WeatherApp/
 2. Add your **OpenWeather API Key** in `local.properties`:
    ```properties
    OPEN_WEATHER_API_KEY=your_api_key_here
+   SHARED_PREF_KEY_ALIAS=add_your_alias_here
    ```
 3. Build and run the project in Android Studio.
 
+## Note
+
+Since I am the only contributor in this repository, I have created and maintaining only single branch named 'main'
+
 ---
+
+
 
 ## How It Works 🔧
 
