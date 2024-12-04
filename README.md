@@ -78,7 +78,7 @@ WeatherApp/
 
 ---
 
-## Test coverage Screenshots 📸
+## Test Coverage Screenshots 📸
 
 *LocalAuthRepositoryImpl*  
 <p >
@@ -113,6 +113,7 @@ WeatherApp/
 
 ## Security tools used in app 🚀
 **RoomDB:** Used 'sqlcipher'
+
 **DataStore:** Used 'security.crypto'
 
 ## Installation 🚀
@@ -145,8 +146,3 @@ Since I am the only contributor in this repository, I have created and maintaini
 
 ---
 
-## License 📜
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-
----
