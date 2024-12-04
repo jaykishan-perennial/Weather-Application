@@ -63,17 +63,59 @@ WeatherApp/
 
 ## Screenshots 📸
 
-*(Add screenshots of your app for better visualization)*  
-![Current Weather Tab](#)  
-![Weather History Tab](#)
+*User registration and login*  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cdf83805-ec79-4580-b974-8efd877623ae" width="250">
+  <img src="https://github.com/user-attachments/assets/d96643c0-8d07-4b22-89c5-c2062bf5bdcf" width="250">
+</p>
+
+*Home screen with weather and history tabs*  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c2da37be-c92b-4760-83b4-2bc65a3b6a52" width="250">
+  <img src="https://github.com/user-attachments/assets/4af651ef-9662-4a0e-9833-7001a8d49b09" width="250">
+</p>
+
 
 ---
+
+## Test coverage Screenshots 📸
+
+*LocalAuthRepositoryImpl*  
+<p >
+  <img src="https://github.com/user-attachments/assets/01e53bfe-4663-421d-8c15-877c1990ccba">
+</p>
+*LoginViewModel*  
+<p >
+  <img src="https://github.com/user-attachments/assets/01e53bfe-4663-421d-8c15-877c1990ccba">
+</p>
+*SignUpViewModel*  
+<p >
+  <img src="https://github.com/user-attachments/assets/e51e6b6a-ceb0-4edb-8970-d244638aff3b">
+</p>
+*WeatherRepositoryImpl* 
+<p>
+  <img src="https://github.com/user-attachments/assets/4fdd0905-cd7c-418e-8854-f1d0363c1bed">
+</p>
+*WeatherHistoryUseCase* 
+<p>
+  <img src="https://github.com/user-attachments/assets/90b553cd-3bcf-4386-b05f-b0e02a3baf4e">
+</p>
+
+*CurrentWeatherUseCase* 
+<p>
+  <img src="https://github.com/user-attachments/assets/81339ab0-ea7a-49ad-9aec-c45b6bfd2128">
+</p>
+
+*WeatherHistoryViewModel* 
+<p>
+  <img src="https://github.com/user-attachments/assets/633adf35-1da0-4d36-81e5-0a69a255e815">
+</p>
 
 ## Installation 🚀
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/weather-app.git
+   git clone https://github.com/jaykishan-perennial/Weather-Application
    cd weather-app
    ```
 2. Add your **OpenWeather API Key** in `local.properties`:
